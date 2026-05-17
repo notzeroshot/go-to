@@ -1,11 +1,111 @@
-<html>
-  <head>
-    <title>
-      go to where...
-    </title>
-  </head>
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random pil</title>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background: #f4f1ea;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+    }
+
+    #arrowBox {
+      width: 50vw;
+      height: 80vh;
+      border: 8px solid #222;
+      border-radius: 24px;
+      background: white;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      font-size: 180px;
+      font-weight: bold;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    #arrow {
+      display: inline-block;
+    }
+
+    button {
+      font-size: 28px;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 14px;
+      background: #222;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    button:hover {
+      background: #444;
+    }
+  </style>
+</head>
+
 <body>
-  hello world
+
+  <div id="arrowBox">
+    <div id="arrow">?</div>
+  </div>
+
+  <button onclick="direction()">Vælg retning</button>
+
+  <script>
+    function direction() {
+      const arrows = ["⬅", "➡"];
+      const chosenArrow = arrows[Math.floor(Math.random() * arrows.length)];
+
+      $("#arrow")
+        .stop(true, true)
+        .fadeOut(120, function () {
+          $(this)
+            .text(chosenArrow)
+            .css({
+              transform: "scale(0.3) rotate(-10deg)",
+              opacity: 0
+            })
+            .show()
+            .animate(
+              { opacity: 1 },
+              {
+                duration: 250,
+                step: function (now) {
+                  const scale = 0.3 + now * 0.8;
+                  const rotate = -10 + now * 10;
+                  $(this).css(
+                    "transform",
+                    "scale(" + scale + ") rotate(" + rotate + "deg)"
+                  );
+                }
+              }
+            );
+        });
+
+      $("#arrowBox")
+        .stop(true, true)
+        .animate({ borderWidth: "16px" }, 120)
+        .animate({ borderWidth: "8px" }, 180);
+    }
+  </script>
+
 </body>
-  
 </html>
